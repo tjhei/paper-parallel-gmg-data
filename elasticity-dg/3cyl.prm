@@ -1,0 +1,5 @@
+# Select problem to solve
+# options: hyper_cube|hyper_L|cylinder|cylinder_shell|three_cylinders
+set test problem = three_cylinders
+
+set use AMG only = false
