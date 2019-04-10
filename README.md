@@ -9,6 +9,5 @@ Thomas C. Clevenger, Timo Heister, Guido Kanschat, Martin Kronbichler
 see https://arxiv.org/abs/1904.03317 for a preprint.
 
 This repo contains:
-```
- elasticity-dg - Discontinuous Galerkin example for linear elasticity. Used in the 'three cylinder' test.
-```
+- ``elasticity-dg/``: Discontinuous Galerkin example for linear elasticity. Used in the 'three cylinder' test.
+- TODO.
