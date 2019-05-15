@@ -23,6 +23,7 @@
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/timer.h>
 #include <deal.II/base/parameter_handler.h>
+#include <deal.II/base/vector_slice.h>
 
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
