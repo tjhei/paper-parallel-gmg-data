@@ -146,6 +146,11 @@ namespace Step39
 
     }
 
+    std::unique_ptr<Manifold<dim, dim>> clone() const
+    {
+      return std_cxx14::make_unique<EllipseManifold<dim>>(direction, main_radius, cut_radius);
+    }
+
     virtual Point<dim> get_intermediate_point(const Point<dim> &p1,
                                               const Point<dim> &p2,
                                               const double w) const
@@ -678,7 +683,7 @@ namespace Step39
     if (settings.problem==ProblemType::three_cylinders)
       {
         GridIn<dim> grid_in;
-        std::ifstream input_3D("../example-coarse-amg/file2.dat");
+        std::ifstream input_3D("threecylinders.dat");
         grid_in.attach_triangulation (triangulation);
         grid_in.read_ucd(input_3D);
 
