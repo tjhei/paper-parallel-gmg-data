@@ -810,7 +810,7 @@ namespace Step39
       {
 
         TimerOutput::Scope timing2 (computing_timer, "Setup MG");
-        dof_handler.distribute_mg_dofs (fe);
+        dof_handler.distribute_mg_dofs ();
 
         const unsigned int n_levels = triangulation.n_global_levels();
         mg_matrix.resize(0, n_levels-1);
@@ -1181,11 +1181,10 @@ namespace Step39
         mg::Matrix<LA::MPI::Vector> mgdown(mg_matrix_dg_down);
         mg::Matrix<LA::MPI::Vector> mgup(mg_matrix_dg_up);
 
-        Multigrid<LA::MPI::Vector > mg(dof_handler, mgmatrix,
+        Multigrid<LA::MPI::Vector > mg(mgmatrix,
                                        coarse_grid_solver, mg_transfer,
                                        mg_smoother, mg_smoother);
         mg.set_edge_flux_matrices(mgdown, mgup);
-        mg.set_debug(3);
 
         PreconditionMG<dim, LA::MPI::Vector,
                        MGTransferPrebuilt<LA::MPI::Vector > >
