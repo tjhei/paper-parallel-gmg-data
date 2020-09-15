@@ -149,7 +149,7 @@ namespace Step39
 
     std::unique_ptr<Manifold<dim, dim>> clone() const
     {
-      return std_cxx14::make_unique<EllipseManifold<dim>>(direction, main_radius, cut_radius);
+      return std::make_unique<EllipseManifold<dim>>(direction, main_radius, cut_radius);
     }
 
     virtual Point<dim> get_intermediate_point(const Point<dim> &p1,
@@ -378,24 +378,24 @@ namespace Step39
           boundary_values.value_list(fe.get_quadrature_points(), data[d], d);
 
         LocalIntegrators::Elasticity::nitsche_residual(
-          dinfo.vector(0).block(0),
-          fe,
-          VectorSlice<const std::vector<std::vector<double> > >(input),
-          VectorSlice<const std::vector<std::vector<Tensor<1,dim> > > >(Dinput),
-          VectorSlice<const std::vector<std::vector<double> > >(data),
-          penalty_pre_factor*dealii::LocalIntegrators::Laplace::compute_penalty(dinfo, dinfo, deg, deg),
-          2. * mu
-        );
+              dinfo.vector(0).block(0),
+              fe,
+              ArrayView<const std::vector<double>> (input),
+              ArrayView<const std::vector<Tensor<1, dim>>> (Dinput),
+              ArrayView<const std::vector<double>> (data),
+              penalty_pre_factor*dealii::LocalIntegrators::Laplace::compute_penalty(dinfo, dinfo, deg, deg),
+              2. * mu
+              );
 
         LocalIntegrators::GradDiv::nitsche_residual(
-          dinfo.vector(0).block(0),
-          fe,
-          VectorSlice<const std::vector<std::vector<double> > >(input),
-          VectorSlice<const std::vector<std::vector<Tensor<1,dim> > > >(Dinput),
-          VectorSlice<const std::vector<std::vector<double> > >(data),
-          penalty_pre_factor*dealii::LocalIntegrators::Laplace::compute_penalty(dinfo, dinfo, deg, deg),
-          1.0
-        );
+              dinfo.vector(0).block(0),
+              fe,
+              ArrayView<const std::vector<double>> (input),
+              ArrayView<const std::vector<Tensor<1, dim>>> (Dinput),
+              ArrayView<const std::vector<double>> (data),
+              penalty_pre_factor*dealii::LocalIntegrators::Laplace::compute_penalty(dinfo, dinfo, deg, deg),
+              1.0
+              );
       }
   }
 
@@ -1558,8 +1558,8 @@ namespace Step39
                 temp_solution = solution;
                 Vector<float> estimated_error_per_cell (triangulation.n_active_cells());
                 KellyErrorEstimator<dim>::estimate (dof_handler,
-                                                    QGauss<dim-1>(3),
-                                                    typename FunctionMap<dim>::type(),
+                                                    QGauss<dim-1>(fe.degree+1),
+                                                    std::map<types::boundary_id,const Function<dim> *>(),
                                                     temp_solution,
                                                     estimated_error_per_cell);
 
