@@ -949,8 +949,9 @@ LaplaceProblem<dim>::setup_system()
     }
   deallog  << std::endl;
 
-  deallog << "workload imbalance: "
-          << MGTools::workload_imbalance(triangulation) << std::endl;
+  if (settings.assembler != Settings::amg)
+    deallog << "workload imbalance: "
+	    << MGTools::workload_imbalance(triangulation) << std::endl;
 
   computing_timer.enter_section("Setup: Sparsity, vectors, and MF");
 
@@ -2317,14 +2318,17 @@ LaplaceProblem<dim>::run()
       if (cycle > 0)
         refine_grid ();
 
+      const double imbalance
+	= (settings.assembler == Settings::amg) ? -1.0 : MGTools::workload_imbalance(triangulation);
+
       pcout << "Triangulation "
             << triangulation.n_global_active_cells() << " active cells, "
             << triangulation.n_global_levels() << " levels, "
-            << "Workload imbalance: " << MGTools::workload_imbalance(triangulation)
+            << "Workload imbalance: " << imbalance
             << std::endl;
       stats.emplace_back("n_active_cells", static_cast<double>(triangulation.n_global_active_cells()));
       stats.emplace_back("n_global_levels", static_cast<double>(triangulation.n_global_levels()));
-      stats.emplace_back("imbalance", MGTools::workload_imbalance(triangulation));
+      stats.emplace_back("imbalance", imbalance);
 
       setup_system ();
       stats.emplace_back("ndofs", static_cast<double>(dof_handler.n_dofs()));
