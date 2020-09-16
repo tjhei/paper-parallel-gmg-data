@@ -10,4 +10,4 @@ see https://arxiv.org/abs/1904.03317 for a preprint.
 
 This repo contains:
 - ``elasticity-dg/``: Discontinuous Galerkin example for linear elasticity. Used in the 'three cylinder' test.
-- TODO.
+- ``laplace/``: Laplace with jump in viscosity. A simplified version is available as [step-50 in deal.II](https://www.dealii.org/current/doxygen/deal.II/step_50.html)
