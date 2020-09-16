@@ -1,0 +1,19 @@
+# Listing of Parameters
+# ---------------------
+# Select your FiniteElement
+set FE              = FE_Q<2>(2)
+set dim             = 2
+
+# Number of adaptive refinement steps.
+set n_steps         = 20
+
+# Select problem to solve
+set problem         = hyper_L
+
+# Select how to refine. Options: global|circle|first quadrant|kelly|estimator
+set refinement type = estimator
+set smoother        = jacobi
+set smoother dampen = 1.0
+set smoother steps = 1
+
+set assembler = matrix based
