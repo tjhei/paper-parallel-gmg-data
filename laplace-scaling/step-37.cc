@@ -35,7 +35,6 @@
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/tria_accessor.h>
 #include <deal.II/grid/tria_iterator.h>
-#include <deal.II/grid/tria_boundary_lib.h>
 #include <deal.II/grid/grid_generator.h>
 
 #include <deal.II/multigrid/multigrid.h>
@@ -301,7 +300,7 @@ namespace Step37
 
     print_averages("Distribute DoFs", time, time_details);
 
-    dof_handler.distribute_mg_dofs (fe);
+    dof_handler.distribute_mg_dofs ();
 
     print_averages("Distribute level DoFs", time, time_details);
 
